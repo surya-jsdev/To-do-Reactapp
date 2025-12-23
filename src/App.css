@@ -34,3 +34,6 @@ body {
   color: white;
   cursor: pointer;
 }
+.btn{
+  background-color: none;
+}
