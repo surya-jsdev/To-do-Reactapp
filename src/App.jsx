@@ -7,15 +7,16 @@ function App() {
   const [error, setError] = useState("");
 
   const handleClick = () => {
-    if (input === "") {
+    if (input.trim() === "") {
       setError("Enter task First")
       return;
     }
-    setResult([...result, input]);
+    setResult([...result, input.trim()]);
     setInput("");
+    setError("");
   }
-  const handleDelete = (id) => {
-    const updatetodo = result.filter((item) => item.id !== id);
+  const handleDelete = (index) => {
+    const updatetodo = result.filter((_, i) => i !== index);
     setResult(updatetodo);
   }
   return (
@@ -23,17 +24,21 @@ function App() {
       <div className="container">
         <input value={input} onChange={(e) => setInput(e.target.value)} type="text" name="text" id="" placeholder='Enter Task...' autoComplete='off' />
         {error && <p>{error}</p>}
-        <button onClick={handleClick}>Add</button>
+        <button className="addtask" onClick={handleClick}>Add</button>
 
         <div>
-          <ul>
-            {result.map((todo, index) => <li key={index}>{todo}< button className='btn' onClick={() => handleDelete()}>❌</button></li>) }
-        </ul>
-      </div>
-    </div >
+          <ul style={{display:"flex",background:"red",flexDirection:"cloumn",width:"300px"}}>
+            {result.map((todo, index) => (
+              <li key={index} style={{display:"flex",justifyContent:"space-between",width:"300px"}}>
+                {todo}
+                <button className='btn' onClick={() => handleDelete(index)}>❌</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div >
 
     </>
   )
 }
-
 export default App
